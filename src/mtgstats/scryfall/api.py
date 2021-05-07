@@ -7,7 +7,7 @@ def search(query_string, limit = None):
     cards = []
     url = query_url(query_string)
     has_more = True
-    # While there are more cards to fetch and we haven't exceeded the limit
+    # While there are more cards to fetch and we haven't exceeded the limit,
     # don't swap the order on the or clause as it should return limit if it is
     # not None or else infinity
     while has_more and len(cards) < (limit or float('inf')):
