@@ -1,5 +1,6 @@
 from unittest import TestCase
 from mtgstats import cards
+import json
 
 class ManaValueTest(TestCase):
 
@@ -23,3 +24,10 @@ class ManaValueTest(TestCase):
 
     def test_complex_cmc(self):
         self.assertEqual(cards.calculate_mana_value('{x}{2/r}{u/r}{r}'), 4)
+
+    def test_fuse_cards_cmc(self):
+        with open('src/tests/data/fuse_cards.json', 'r') as file:
+            cards = json.load(file)
+        for card in cards:
+            faces_sum = sum(map(lambda x:x['cmc'], card['faces']))
+            self.assertEqual(card['cmc'], faces_sum)

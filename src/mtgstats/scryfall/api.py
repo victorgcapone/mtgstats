@@ -1,7 +1,7 @@
 import requests
 
 SCRYFALL_API_URL = 'https://api.scryfall.com'
-DEBUG = True
+DEBUG = False
 
 def search(query_string, limit = None):
     cards = []
