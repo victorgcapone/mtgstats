@@ -24,4 +24,4 @@ na pasta /data, cada linha do aquivo é
 <nome_do_arquivo>|<query do scryfall>
 ```
 
-Você pode usar o parametro ```--no-cache``` para forçar o Download de arquivos q já existem
+Você pode usar o parametro ```--no-cache``` para forçar o Download de arquivos que já existem
