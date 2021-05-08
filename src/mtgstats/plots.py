@@ -35,23 +35,24 @@ def color_distribution(cards, ax = None):
     
     if ax == None:
         fig, ax = plt.subplots(figsize=(10,4))
-
-                
+      
         ax.set(
             title='Amount of cards for each color',
             xlabel='Color',
             ylabel='Amount of cards'
         )
-
     else:
         fig = ax.figure
+
+    ax.bar(colors_freq.index, colors_freq)
 
     # he cumulative sum will exceed the total number of cards if there are multicolored cards
     # as they count for all of their colors
     cumsum_ax = ax.twinx()
+    cumsum_ax.set(
+        ylabel = 'Cum. Sum.'
+    )
     cumsum_ax.plot(colors_freq.cumsum(), c='salmon')
-
-    ax.bar(colors_freq.index, colors_freq)
 
     fig.tight_layout()
     plt.close()
@@ -77,9 +78,11 @@ def not_in_color_distribution(cards, ax = None):
     else:
         fig = ax.figure
 
-
     ax.bar(not_in_color.index, not_in_color)
     cumsum_ax = ax.twinx()
+    cumsum_ax.set(
+        ylabel = 'Cum. Sum.'
+    )
     cumsum_ax.plot(colors_freq.cumsum(), c='salmon')
     
     fig.tight_layout()
