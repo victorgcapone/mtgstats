@@ -10,3 +10,21 @@ def cmc_analysis(cards, normalize_cumsum = False):
     if normalize_cumsum:
         cumsum /= len(cards)
     return series.to_dict(), cumsum.to_dict()
+
+
+def color_analysis(cards, colors="WUBRGC"):
+    counts = {
+        c: 0 for c in colors
+    }
+
+    for card in cards:
+        try:
+            if len(card['colors']) == 0 and 'C' in colors:
+                counts['C'] += 1
+            for color in colors:
+                if color in card['colors']:
+                    counts[color] += 1
+        except:
+            print(card['name'])
+    return counts
+                
