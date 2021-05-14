@@ -16,6 +16,8 @@ MANA_SYMBOL_REGEX = "{([XUWBRGC0-9/]*)}"
 
 LETTERS_MANA_SYMBOL = "XUWBRGC"
 
+TYPE_LINE_SEPARATOR = '—'
+
 def parse_cards(card_list, fields_to_keep = GAMEPLAY_FIELDS+EXTRA_FIELDS):
     if type(card_list) is not list:
         card_list = [card_list]
@@ -66,3 +68,8 @@ def __parse_hybrid_mana_symbol_value(symbol):
         return 1
     return float(m)
      
+def extract_types(type_line):
+    if TYPE_LINE_SEPARATOR in type_line:
+        supertypes, subtypes = type_line.split(TYPE_LINE_SEPARATOR)
+        return supertypes.split(), subtypes.split()
+    return type_line.split(), []
