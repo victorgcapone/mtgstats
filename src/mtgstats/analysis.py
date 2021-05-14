@@ -1,4 +1,5 @@
 from pandas import Series
+from mtgstats.cards import extract_types
 
 """
 Takes a list of cards and compute frequency and cumulative sum arrays for it
@@ -27,4 +28,13 @@ def color_analysis(cards, colors="WUBRGC"):
         except:
             print(card['name'])
     return counts
-                
+
+def subtype_analysis(cards):
+    result = {}
+
+    for card in cards:
+        supertypes, subtypes = extract_types(card['type_line'])
+        for subtype in subtypes:
+            subtype_count = result.get(subtype, 0)
+            result[subtype] = subtype_count + 1
+    return result
