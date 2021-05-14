@@ -14,7 +14,7 @@ pip install . -r requirements.txt
 Na pasta raíz do repositório, executar
 
 ```
-./src/tests/run_tests.py
+./src/tests/run_tests.sh
 ```
 
 Esse script executa as buscas em src/tests/data/test_queries.txt e gera os arquivos de cartas correspondentes
