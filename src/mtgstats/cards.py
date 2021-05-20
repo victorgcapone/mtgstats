@@ -12,6 +12,10 @@ EXTRA_FIELDS = [
     'edhrec_rank', 'rarity'
 ]
 
+MAIN_FACE_FIELDS = [
+    'name', 'mana_cost', 'type_line'
+]
+
 MANA_SYMBOL_REGEX = "{([XUWBRGC0-9/]*)}"
 
 LETTERS_MANA_SYMBOL = "XUWBRGC"
@@ -23,12 +27,17 @@ def parse_cards(card_list, fields_to_keep = GAMEPLAY_FIELDS+EXTRA_FIELDS):
         card_list = [card_list]
     return [parse_card(card, fields_to_keep) for card in card_list]
 
-def parse_card(card, fields_to_keep = GAMEPLAY_FIELDS+EXTRA_FIELDS, parse_faces=True):
+def parse_card(card, fields_to_keep = GAMEPLAY_FIELDS+EXTRA_FIELDS, parse_faces=True, main_face='front'):
     parsed = keep_card_fields(card, fields_to_keep)
     faces = card.get('card_faces', False)
     if parse_faces and faces:
         parsed_faces = __parse_faces(faces, card, fields_to_keep)
         parsed['faces'] = parsed_faces
+
+        # Set the data of the card to the data of the main face (front or flip)
+        main_face = 0 if main_face == 'front' else 1
+        for field in MAIN_FACE_FIELDS:
+            parsed[field] = parsed_faces[0][field]
     return parsed
 
 def __parse_faces(faces, card, fields_to_keep):
