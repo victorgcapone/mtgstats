@@ -4,12 +4,14 @@ requirements = [
     'pandas', 
     'requests', 
     'seaborn',
-    'jupyter'
+    'jupyter',
+    'beautifulsoup4'
 ]
 
 packages = [
     'mtgstats',
-    'mtgstats.scryfall'
+    'mtgstats.scryfall',
+    'mtgstats.ligamagic'
 ]
 
 setup(
