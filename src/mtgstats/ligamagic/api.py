@@ -10,7 +10,6 @@ def get_card_pricings(card, set=''):
     bs = BeautifulSoup(response.content, 'html.parser')
 
     pricings = bs.find('div', id='mobile-precomedio').find_all('div', class_='bloco-preco-superior')
-    print(pricings)
     pricing_data = [parse_pricing_details(p) for p in pricings]
     return pricing_data
 
