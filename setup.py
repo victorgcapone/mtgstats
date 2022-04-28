@@ -5,7 +5,8 @@ requirements = [
     'requests', 
     'seaborn',
     'jupyter',
-    'beautifulsoup4'
+    'beautifulsoup4',
+    'tqdm'
 ]
 
 packages = [
