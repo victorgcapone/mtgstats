@@ -23,5 +23,20 @@ def search(query_string, limit = None):
     # scryfall's page length, in this case we slice the list
     return cards[:limit]
 
+
+def collection(card_names):
+    url = f'{SCRYFALL_API_URL}/cards/collection'
+    body = {
+        'identifiers': [
+            {'name': card} for card in card_names
+        ]
+    }
+
+    response = requests.post(url, json=body)
+
+    if response.ok:
+        return response.json()['data']
+
+
 def query_url(query_string):
     return f'{SCRYFALL_API_URL}/cards/search?q={query_string}'

@@ -1,6 +1,7 @@
 from distutils.log import INFO
 from random import shuffle
 from tqdm import tqdm
+import numpy as np
 
 import logging
 
@@ -35,7 +36,7 @@ class Player():
                 colored = [land for land in lands_in_hand if land['colors'][color] > 0]
 
                 if not colored:
-                    # No Colored lands, for that color, continue iteration
+                    # No Colored lands for that color, continue iteration
                     candidates = []
                     continue
 
@@ -67,8 +68,6 @@ class Player():
             if not candidates:
                 # We couldn't find a suitable land, just play any
                 candidates = lands_in_hand
-
-
 
         if len(candidates) == 0:
             return False
@@ -146,38 +145,51 @@ class ManaCurveSimulator():
         logging.info(f"Available colors: {colors}")
         return colors
 
-def create_land(colors, enters_tapped):
+def create_card(colors, enters_tapped):
     return {
         'colors': colors,
         'enters_tapped': enters_tapped
     }
 
+def random_spell(colors, max_cmc):
+    spell = create_card(colors, False)
+    r = np.random.randint(1, 3, size=len(colors))
+    spell['cost'] = colors * r
+    cmc = sum(spell['cost'])
+    for _ in range(cmc-max_cmc):
+        idx = np.argmax(spell['cost'])
+        spell['cost'][idx] -= 1
+    spell['is_spell'] = True
+    return spell
+    
+
 # Color arrays is (red, green, blue, black, white)
 def Mountain():
-    return create_land((1,0,0,0,0), False)
+    return create_card((1,0,0,0,0), False)
 
 def Forest():
-    return create_land((0,1,0,0,0), False)
+    return create_card((0,1,0,0,0), False)
 
 def Island():
-    return create_land((0,0,1,0,0), False)
+    return create_card((0,0,1,0,0), False)
 
 def Swamp():
-    return create_land((0,0,0,1,0), False)
+    return create_card((0,0,0,1,0), False)
 
 def Plains():
-    return create_land((0,0,0,0,1), False)
+    return create_card((0,0,0,0,1), False)
 
 def Spell():
-    card = create_land((0,0,0,0,0), False)
+    card = create_card((0,0,0,0,0), False)
     card['is_spell'] = True
     return card
+
 
 def main():
     deck = []
     deck.extend([Mountain() for _ in range(15)])
     deck.extend([Forest() for _ in range(15)])
-    deck.extend([create_land((1,1,0,0,0), True) for _ in range(6)])
+    deck.extend([create_card((1,1,0,0,0), True) for _ in range(6)])
     deck.extend([Spell() for _ in range(63)])
 
     simulator = ManaCurveSimulator(deck)
