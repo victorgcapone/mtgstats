@@ -70,7 +70,7 @@ def calculate_mana_value(cost_string):
 
 def __parse_hybrid_mana_symbol_value(symbol):
     s1, s2 = symbol.split("/")
-    # Min because the chars from '1'-'9' ahve lower ascii code than the letters
+    # Min because the chars from '1'-'9' have lower ascii code than the letters
     m = min(s1, s2)
     if m == 'X':
         return 0
